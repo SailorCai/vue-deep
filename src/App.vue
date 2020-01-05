@@ -6,13 +6,39 @@
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import HelloWorld from './components/HelloWorld.vue';
+import cPromise from './utils/moduleDemo';
+import { mapState } from 'vuex';
 
 export default {
   name: 'app',
   components: {
     HelloWorld
-  }
+  },
+  computed: {
+    ...mapState(['name']),
+  },
+  mounted() {
+    console.log(this.name);
+  },
+  methods: {
+    /* testPromise() {
+      new Promise((resolve, reject) => {
+        sss
+        setTimeout(function() {
+          resolve('yes');
+          console.log('ddd');
+        }, 2000);
+      }).then(res => {
+        console.log(res);
+          return 'yes2';
+      }).then(res => {
+        console.log(res);
+      }).catch(err => {
+        console.error(err);
+      });
+    } */
+  },
 }
 </script>
 

@@ -1,58 +1,88 @@
+<!--
+ * @Author: SailorCai
+ * @Date: 2019-09-15 12:24:14
+ * @LastEditors  : SailorCai
+ * @LastEditTime : 2020-01-01 12:05:32
+ * @FilePath: /hello-cli3/src/components/HelloWorld.vue
+ -->
 <template>
-  <div class="hello">
-    <h1>{{ msg }}</h1>
-    <p>
-      For a guide and recipes on how to configure / customize this project,<br>
-      check out the
-      <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>.
-    </p>
-    <h3>Installed CLI Plugins</h3>
-    <ul>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel" target="_blank" rel="noopener">babel</a></li>
-      <li><a href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint" target="_blank" rel="noopener">eslint</a></li>
-    </ul>
-    <h3>Essential Links</h3>
-    <ul>
-      <li><a href="https://vuejs.org" target="_blank" rel="noopener">Core Docs</a></li>
-      <li><a href="https://forum.vuejs.org" target="_blank" rel="noopener">Forum</a></li>
-      <li><a href="https://chat.vuejs.org" target="_blank" rel="noopener">Community Chat</a></li>
-      <li><a href="https://twitter.com/vuejs" target="_blank" rel="noopener">Twitter</a></li>
-      <li><a href="https://news.vuejs.org" target="_blank" rel="noopener">News</a></li>
-    </ul>
-    <h3>Ecosystem</h3>
-    <ul>
-      <li><a href="https://router.vuejs.org" target="_blank" rel="noopener">vue-router</a></li>
-      <li><a href="https://vuex.vuejs.org" target="_blank" rel="noopener">vuex</a></li>
-      <li><a href="https://github.com/vuejs/vue-devtools#vue-devtools" target="_blank" rel="noopener">vue-devtools</a></li>
-      <li><a href="https://vue-loader.vuejs.org" target="_blank" rel="noopener">vue-loader</a></li>
-      <li><a href="https://github.com/vuejs/awesome-vue" target="_blank" rel="noopener">awesome-vue</a></li>
-    </ul>
+  <div>
+    <k-form :model="userInfo" :rules="rules" ref="loginForm">
+      <k-form-item prop="username" label="用户名">
+        <k-input type="text" v-model="userInfo.username" placeholder="请输入用户名"></k-input>
+      </k-form-item>
+      <k-form-item prop="password" label="密码">
+        <k-input type="password" v-model="userInfo.password" placeholder="请输入密码"></k-input>
+      </k-form-item>
+      <k-form-item>
+        <button @click="login">登录</button>
+      </k-form-item>
+    </k-form>
   </div>
 </template>
 
 <script>
+// import {a} from '../utils/moduleDemo';
+import { mapState } from 'vuex';
+import kForm from './kForm/kForm.vue';
+import kFormItem from './kForm/kFormItem.vue';
+import kInput from './kForm/kInput.vue';
+import notice from '@/components/notice.vue';
+
 export default {
   name: 'HelloWorld',
+  components: {
+    kInput,
+    kForm,
+    kFormItem
+  },
   props: {
     msg: String
+  },
+  data() {
+    return {
+      userInfo: {
+        username: '',
+        password: '',
+      },
+      rules: {
+        username: {
+          required: true,
+          message: '用户名必填'
+        },
+        password: {
+          required: true,
+          message: '密码必填'
+        }
+      },
+    }
+  },
+  computed: {
+    ...mapState(['name']),
+  },
+  mounted() {
+    this.$store.commit('increment', 'haha');
+  },
+  methods: {
+    login() {
+      this.$refs.loginForm.validate(valid => {
+        this.$create(notice, {
+          duration: 2000,
+          message: valid ? '登录': '校验失败',
+          title: '登录提示框'
+        }).show();
+        /* if(valid) {
+          alert('请求登录');
+        }else{
+          console.log('error submit');
+          return false;
+        } */
+      });
+    },
   }
 }
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h3 {
-  margin: 40px 0 0;
-}
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-a {
-  color: #42b983;
-}
 </style>
