@@ -1,3 +1,10 @@
+<!--
+ * @Author: SailorCai
+ * @Date: 2019-09-15 12:24:14
+ * @LastEditors  : SailorCai
+ * @LastEditTime : 2020-01-05 10:26:04
+ * @FilePath: /vue-deep/src/App.vue
+ -->
 <template>
   <div id="app">
     <img alt="Vue logo" src="./assets/logo.png">
@@ -17,7 +24,7 @@ export default {
   },
   computed: {
     ...mapState(['name']),
-  },
+  }, 
   mounted() {
     console.log(this.name);
   },
