@@ -1,7 +1,7 @@
 <!--
  * @Author: SailorCai
  * @Date: 2019-12-31 21:41:04
- * @LastEditTime : 2020-01-01 10:53:42
+ * @LastEditTime : 2020-01-05 15:35:54
  * @LastEditors  : SailorCai
  * @Description: In User Settings Edit
  * @FilePath: /web-exer/hello-cli3/src/components/kForm/kForm.vue
@@ -14,6 +14,7 @@
 <script>
 export default {
   name: "kForm",
+  componentName: 'kForm',
   provide() {
     return {
       form: this,
@@ -28,11 +29,17 @@ export default {
       type: Object,
     },
   },
+  created() {
+    this.fields = [];
+    this.$on('kkb.form.addField', item => {
+      if(item) {
+        this.fields.push(item);
+      }
+    });
+  },
   methods: {
     validate(cb) {
-      const tasks = this.$children
-        .filter(item => item.prop)
-        .map(item => item.validate());
+      let tasks = this.fields.map(item => item.validate());
       
       Promise.all(tasks)
         .then(() => {

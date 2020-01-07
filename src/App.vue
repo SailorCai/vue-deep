@@ -2,31 +2,32 @@
  * @Author: SailorCai
  * @Date: 2019-09-15 12:24:14
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 10:26:04
+ * @LastEditTime : 2020-01-05 18:26:10
  * @FilePath: /vue-deep/src/App.vue
  -->
 <template>
   <div id="app">
+    <p>
+      <router-link to="/">首页</router-link> | 
+      <router-link to="/about">关于</router-link>
+    </p>
     <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+
+    <router-view></router-view>
+    <home-page />
   </div>
 </template>
 
-<script>
-import HelloWorld from './components/HelloWorld.vue';
-import cPromise from './utils/moduleDemo';
-import { mapState } from 'vuex';
+<script> 
+// import HelloWorld from './components/HelloWorld.vue';
+// import cPromise from './utils/moduleDemo';
+import homePage from './view/home.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
-  },
-  computed: {
-    ...mapState(['name']),
-  }, 
-  mounted() {
-    console.log(this.name);
+    // HelloWorld,
+    homePage
   },
   methods: {
     /* testPromise() {

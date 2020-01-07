@@ -2,7 +2,7 @@
  * @Author: SailorCai
  * @Date: 2020-01-01 11:44:29
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-01 17:07:51
+ * @LastEditTime : 2020-01-05 14:09:18
  * @FilePath: /hello-cli3/src/components/notice.vue
  -->
 <template>
@@ -43,7 +43,7 @@ export default {
   methods: {
       show() {
         this.isShow = true;
-        // setTimeout(this.hide, this.duration);
+        setTimeout(this.hide, this.duration);
       },
       hide() {
           this.remove();

@@ -2,7 +2,7 @@
  * @Author: SailorCai
  * @Date: 2019-12-31 21:41:21
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-01 17:11:54
+ * @LastEditTime : 2020-01-05 16:17:15
  * @FilePath: /hello-cli3/src/components/kForm/kFormItem.vue
  -->
 <template>
@@ -17,9 +17,12 @@
 </template>
 <script>
 import Schema from 'async-validator';
+import emitter from '@/mixins/emitter.js'
 
 export default {
   name: "kFromItem",
+  componentName: 'kFormItem',
+  mixins: [emitter],
   inject: ['form'],
   props: {
       label: {
@@ -36,7 +39,12 @@ export default {
     };
   },
   mounted() {
-    this.$on('validate', this.validate);
+    this.$on('validate', () => {
+      this.validate();
+    });
+    if(this.prop) {
+      this.dispatch('kForm', 'kkb.form.addField', [this]);
+    }
   },
   methods: {
       validate() {

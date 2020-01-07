@@ -2,7 +2,7 @@
  * @Author: SailorCai
  * @Date: 2019-09-15 12:24:14
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-01 12:05:32
+ * @LastEditTime : 2020-01-05 18:31:00
  * @FilePath: /hello-cli3/src/components/HelloWorld.vue
  -->
 <template>
@@ -61,7 +61,7 @@ export default {
     ...mapState(['name']),
   },
   mounted() {
-    this.$store.commit('increment', 'haha');
+    // this.$store.commit('increment', 'haha');
   },
   methods: {
     login() {
