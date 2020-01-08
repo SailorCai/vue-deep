@@ -2,7 +2,7 @@
  * @Author: SailorCai
  * @Date: 2020-01-05 16:18:45
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 17:37:54
+ * @LastEditTime : 2020-01-07 18:05:35
  * @FilePath: /vue-deep/src/kRouter/index.js
  */
 import routerLink from './routerLink'
@@ -13,21 +13,39 @@ let Vue;
 class kRouter {
     constructor(options) {
         this.$options = options;
+
+        this.current = '/';
+        Vue.util.defineReactive(this, 'routerMap', []);
     
-        Vue.util.defineReactive(this, 'current', '/');
     
         window.addEventListener('hashchange', this.onhashchange.bind(this));
         window.addEventListener('load', this.onhashchange.bind(this));
 
+        this.match();
 
-        this.routerMap = {};
-        this.$options.routes.forEach(item => {
-            this.routerMap[item.path] = item;
+    }
+    match(routes) {
+        routes = routes || this.$options.routes;
+        const router = this;
+        routes.forEach(item => {
+            if(item.path === '/' && item.path === router.current) {
+                router.routerMap.push(item);
+                return;
+            }
+
+            if(item.path !== '/' && this.current.indexOf(item.path) !== -1) {
+                console.log('===============',router.current);
+                router.routerMap.push(item);
+            }
+            if(item.children){
+                 router.match(item.children);
+            }
         });
     }
-
     onhashchange() {
         this.current = window.location.hash.slice(1);
+        this.routerMap = [];
+        this.match(this.routes);
     }
 
 

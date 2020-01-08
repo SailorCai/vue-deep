@@ -2,7 +2,7 @@
  * @Author: SailorCai
  * @Date: 2019-12-19 07:24:45
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 23:13:23
+ * @LastEditTime : 2020-01-07 15:42:46
  * @FilePath: /vue-deep/src/store/index.js
  */
 import Vuex from '@/kVuex';
@@ -17,6 +17,11 @@ export default new Vuex.Store({
     state: {
         // name: 'Sailor',
         count: 1,
+    },
+    getter: {
+        doublecount(state) {
+            return state.count*2;
+        }
     },
     mutations: {
         increment (state, num = 1) {
