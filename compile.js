@@ -2,7 +2,7 @@
  * @Author: SailorCai
  * @Date: 2020-01-08 21:25:15
  * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-11 08:55:23
+ * @LastEditTime : 2020-01-11 08:58:31
  * @FilePath: /vue-deep/compile.js
  */
 class Compiler{
@@ -57,7 +57,7 @@ class Compiler{
             let fn = this[dire+'Updater'];
             // 先执行第一次更新
             // 如果name以k-开头说明是指令
-            if(name.indexOf('k-') === 0) {
+            if(name.indexOf('k-') === 0) { 
                 fn.call(this, node, this._vm[value]);
                 new Watcher(this._vm, value, function(vm, val) {
                     fn && fn(node, val);
