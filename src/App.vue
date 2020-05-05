@@ -1,33 +1,34 @@
 <!--
  * @Author: SailorCai
  * @Date: 2019-09-15 12:24:14
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 18:26:10
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-05 23:10:50
  * @FilePath: /vue-deep/src/App.vue
  -->
 <template>
   <div id="app">
     <p>
-      <router-link to="/">首页</router-link> | 
+      <router-link to="/">首页</router-link>|
       <router-link to="/about">关于</router-link>
     </p>
-    <img alt="Vue logo" src="./assets/logo.png">
+    <img alt="Vue logo" src="./assets/logo.png" />
 
     <router-view></router-view>
-    <home-page />
+    <!-- <home-page /> -->
+    <!-- <hello-world></hello-world> -->
   </div>
 </template>
 
-<script> 
-// import HelloWorld from './components/HelloWorld.vue';
+<script>
+// import HelloWorld from "./components/HelloWorld.vue";
 // import cPromise from './utils/moduleDemo';
-import homePage from './view/home.vue'
+// import homePage from "./view/home.vue";
 
 export default {
-  name: 'app',
+  name: "app",
   components: {
-    // HelloWorld,
-    homePage
+    // HelloWorld
+    // homePage
   },
   methods: {
     /* testPromise() {
@@ -46,13 +47,13 @@ export default {
         console.error(err);
       });
     } */
-  },
-}
+  }
+};
 </script>
 
 <style>
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  font-family: "Avenir", Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;

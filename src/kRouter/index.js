@@ -1,71 +1,84 @@
-/*
- * @Author: SailorCai
- * @Date: 2020-01-05 16:18:45
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-07 18:05:35
- * @FilePath: /vue-deep/src/kRouter/index.js
- */
-import routerLink from './routerLink'
-import routerView from './routerView'
+var Vue;
+class VueRouter {
+  constructor(options) {
+    this.$options = options;
 
-let Vue;
+    this.current = window.location.hash.slice(1);
 
-class kRouter {
-    constructor(options) {
-        this.$options = options;
+    Vue.util.defineReactive(this, "matched", []);
+    this.match();
+    window.addEventListener("hashchange", this.onHashChange.bind(this));
+    window.addEventListener("load", this.onHashChange.bind(this));
+  }
+  onHashChange() {
+    this.current = window.location.hash.substr(1);
+    this.matched = [];
+    this.match();
+  }
 
-        this.current = '/';
-        Vue.util.defineReactive(this, 'routerMap', []);
-    
-    
-        window.addEventListener('hashchange', this.onhashchange.bind(this));
-        window.addEventListener('load', this.onhashchange.bind(this));
+  match(routes) {
+    routes = routes || this.$options.routes;
 
-        this.match();
+    for (const route of routes) {
+      if (route.path === "/" && this.current === "/") {
+        this.matched.push(route);
+        return;
+      }
+      if (route.path !== "/" && this.current.indexOf(route.path) > -1) {
+        this.matched.push(route);
 
+        if (route.children) {
+          this.match.call(this, route.children);
+        }
+
+        return;
+      }
     }
-    match(routes) {
-        routes = routes || this.$options.routes;
-        const router = this;
-        routes.forEach(item => {
-            if(item.path === '/' && item.path === router.current) {
-                router.routerMap.push(item);
-                return;
-            }
-
-            if(item.path !== '/' && this.current.indexOf(item.path) !== -1) {
-                console.log('===============',router.current);
-                router.routerMap.push(item);
-            }
-            if(item.children){
-                 router.match(item.children);
-            }
-        });
-    }
-    onhashchange() {
-        this.current = window.location.hash.slice(1);
-        this.routerMap = [];
-        this.match(this.routes);
-    }
-
-
+  }
 }
 
-kRouter.install = function(_Vue) {
-    Vue = _Vue;
+VueRouter.install = function(_vue) {
+  Vue = _vue;
+  _vue.mixin({
+    beforeCreate() {
+      if (this.$options.router) {
+        Vue.prototype.$router = this.$options.router;
+      }
+    }
+  });
 
-    Vue.mixin({
-        // 这里混入的方法是每个vue实例都会执行的
-        beforeCreate() {
-            // 这个判断保证只有根实例才执行
-            if(this.$options.router) {
-                Vue.prototype.$router = this.$options.router;
-            }
-        },
-    });
+  Vue.component("router-link", {
+    props: {
+      to: { type: String, required: true }
+    },
+    render(h) {
+      return h("a", { attrs: { href: "#" + this.to } }, this.$slots.default);
+    }
+  });
 
-    Vue.component('routerLink', routerLink);
-    Vue.component('routerView', routerView);
+  Vue.component("router-view", {
+    render(h) {
+      let depth = 0;
+      this.$vnode.data.routerView = true;
+      // 遍历父级，得出深度
+      let parent = this.$parent;
+      while (parent) {
+        const vnodeData = parent.$vnode && parent.$vnode.data;
+        if (vnodeData && vnodeData.routerView) {
+          depth++;
+        }
+        parent = parent.$parent;
+      }
+      const matched = this.$router.matched;
+
+      let component = null;
+      const route = matched[depth];
+      if (route) {
+        component = route.component;
+      }
+      return h(component);
+    }
+  });
 };
 
-export default kRouter;
+export default VueRouter;

@@ -1,23 +1,24 @@
 /*
  * @Author: SailorCai
- * @Date: 2020-01-01 11:11:41
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-01 12:00:10
- * @FilePath: /hello-cli3/src/utils/create.js
+ * @Date: 2020-01-11 11:57:23
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-05 07:52:12
+ * @FilePath: /vue-deep/src/utils/create.js
  */
-import Vue from 'vue';
+import Vue from "vue";
 
-export default function create(Component, props) {
-    let vm = new Vue({
-        render: h => h(Component, {props}),
-    }).$mount();
+function create(component, props) {
+  const vim = new Vue({
+    render: h => h(component, { props })
+  }).$mount();
 
-    document.body.appendChild(vm.$el);
-    const comp = vm.$children[0];
-    comp.remove = function() {
-        document.body.removeChild(vm.$el);
-        vm.$destroy();
-    };
-
-    return comp;
+  document.body.appendChild(vim.$el);
+  const comp = vim.$children[0];
+  comp.remove = () => {
+    document.body.removeChild(vim.$el);
+    vim.$destroy();
+  };
+  return comp;
 }
+
+export default create;

@@ -1,9 +1,9 @@
 <!--
  * @Author: SailorCai
  * @Date: 2020-01-05 15:45:29
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-07 17:01:41
- * @FilePath: /vue-deep/src/components/kForm/about.vue
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-05 16:26:38
+ * @FilePath: /vue-deep/src/components/about.vue
  -->
 <template>
   <div>
@@ -14,11 +14,10 @@
 <script>
 export default {
   name: "about",
-  data () {
-    return {
-    };
+  data() {
+    return {};
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 </style>

@@ -1,69 +1,66 @@
 <!--
  * @Author: SailorCai
- * @Date: 2019-12-31 21:41:21
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 16:17:15
- * @FilePath: /hello-cli3/src/components/kForm/kFormItem.vue
+ * @Date: 2020-01-11 11:57:23
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-04 23:37:56
+ * @FilePath: /vue-deep/src/components/kForm/kFormItem.vue
  -->
 <template>
-  <div>
-    <label for="">{{label}}</label>
-    <!-- 输入控件 -->
+  <div class="form-item">
+    <label for>{{label}}</label>
     <slot></slot>
-    <!-- 错误提示 -->
-    <p v-if="error" style="color: red;">{{error}}</p>
+    <p v-show="error" style="color: red;">{{error}}</p>
   </div>
-
 </template>
 <script>
-import Schema from 'async-validator';
-import emitter from '@/mixins/emitter.js'
+import Schema from "async-validator";
 
 export default {
-  name: "kFromItem",
-  componentName: 'kFormItem',
-  mixins: [emitter],
-  inject: ['form'],
+  inject: ["form"],
+  name: "kFormItem",
+  componentName: "kFormItem",
   props: {
-      label: {
-          type: String,
-          default: ""
-      },
-      prop: {
-          type: String,
-      },
+    label: { type: String, default: "" },
+    prop: { type: String }
   },
-  data () {
+  data() {
     return {
-        error: '',
+      error: ""
     };
   },
-  mounted() {
-    this.$on('validate', () => {
+  created() {
+    this.$on("validate", () => {
       this.validate();
     });
-    if(this.prop) {
-      this.dispatch('kForm', 'kkb.form.addField', [this]);
+  },
+  mounted() {
+    if (this.prop) {
+      this.form.$emit("k.form.addfield", this);
     }
   },
   methods: {
-      validate() {
-          let rule = this.form.rules[this.prop],
-            value = this.form.model[this.prop],
-            // 校验描述对象
-            desc = {[this.prop]: rule};
-          let schema =  new Schema(desc);
-          // 调用实例validate方法
-          return schema.validate({[this.prop]: value}, errs => {
-            if(errs) {
-              this.error  = errs[0].message;
-            }else{
-              this.error = '';
-            }
-          }); 
-      },
+    validate() {
+      const rules = this.form.rules[this.prop];
+      const value = this.form.model[this.prop];
+      const desc = { [this.prop]: rules };
+      const schema = new Schema(desc);
+      return schema.validate({ [this.prop]: value }, errors => {
+        if (errors) {
+          this.error = errors[0].message;
+        } else {
+          this.error = "";
+        }
+      });
+    }
   }
-}
+};
 </script>
-<style lang="scss" scoped>
+<style scoped>
+.form-item {
+  margin-bottom: 20px;
+}
+.form-item label {
+  width: 100px;
+  display: inline-block;
+}
 </style>

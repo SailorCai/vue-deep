@@ -1,46 +1,39 @@
 <!--
  * @Author: SailorCai
- * @Date: 2019-12-31 21:41:04
- * @LastEditTime : 2020-01-05 15:35:54
- * @LastEditors  : SailorCai
- * @Description: In User Settings Edit
- * @FilePath: /web-exer/hello-cli3/src/components/kForm/kForm.vue
+ * @Date: 2020-01-11 11:57:23
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-04 22:47:06
+ * @FilePath: /vue-deep/src/components/kForm/kForm.vue
  -->
 <template>
-  <div class="kfrom">
+  <section>
     <slot></slot>
-  </div>
+  </section>
 </template>
 <script>
 export default {
-  name: "kForm",
-  componentName: 'kForm',
   provide() {
     return {
-      form: this,
+      form: this
     };
   },
+  name: "component_name",
   props: {
-    model: {
-      type: Object,
-      required: true,
-    },
-    rules: {
-      type: Object,
-    },
+    rules: { type: Object },
+    model: { type: Object, reqired: true }
+  },
+  data() {
+    return {};
   },
   created() {
     this.fields = [];
-    this.$on('kkb.form.addField', item => {
-      if(item) {
-        this.fields.push(item);
-      }
+    this.$on("k.form.addfield", item => {
+      this.fields.push(item);
     });
   },
   methods: {
     validate(cb) {
-      let tasks = this.fields.map(item => item.validate());
-      
+      const tasks = this.fields.map(item => item.validate());
       Promise.all(tasks)
         .then(() => {
           cb(true);
@@ -48,13 +41,9 @@ export default {
         .catch(() => {
           cb(false);
         });
-    },
-  },
-  data () {
-    return {
-    };
+    }
   }
-}
+};
 </script>
 <style lang="scss" scoped>
 </style>

@@ -1,41 +1,43 @@
 <!--
  * @Author: SailorCai
- * @Date: 2019-12-31 21:41:10
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 13:04:30
- * @FilePath: /hello-cli3/src/components/kForm/kInput.vue
+ * @Date: 2020-01-11 11:57:23
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-04 23:26:36
+ * @FilePath: /vue-deep/src/components/kForm/kInput.vue
  -->
 <template>
-    <!-- 输入控件 -->
-    <input v-bind="$attrs" :value="value" @input="onInput">
+  <input v-bind="$attrs" :value="value" :type="type" @input="onInput" />
 </template>
 <script>
-import emitter from '@/mixins/emitter.js';
+import emitter from "./emitter.js";
 
 export default {
   inheritAttrs: false,
+  name: "component_name",
   mixins: [emitter],
-  name: "kInput",
   props: {
-    value: {
-      type: String,
-      default: '',
-    },
+    value: { type: String, required: true },
+    type: { type: String, default: "text" }
   },
-  data () {
-    return {
-      error: '',
-    };
+  data() {
+    return {};
   },
   methods: {
     onInput(e) {
-      this.$emit('input', e.target.value);
-      // 通知kform-item校验
-      // this.$parent.$emit('validate');
-      this.dispatch('kFormItem', 'validate');
-    },
+      // 触发input事件，实现v-model
+      this.$emit("input", e.target.value);
+      // 值改变后通知k-form-item校验
+      // this.$parent.$emit("validate");
+      this.dispatch("validate", "kFormItem");
+    }
   }
-}
+};
 </script>
-<style lang="scss" scoped>
+<style scoped>
+input {
+  outline: none;
+  width: 300px;
+  height: 32px;
+  background-color: none !important;
+}
 </style>

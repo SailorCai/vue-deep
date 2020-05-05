@@ -1,30 +1,40 @@
 /*
  * @Author: SailorCai
  * @Date: 2020-01-05 16:53:23
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-07 18:06:44
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-05 16:33:08
  * @FilePath: /vue-deep/src/kRouter/routerView.js
  */
 export default {
-    name: 'router-link',
-    props: {},
-    render(h) {
-        // routerview组件标记自己为routerview组件
-        this.$vnode.isRouterView = true;
+  name: "router-link",
+  props: {},
+  render(h) {
+    // this.isRouterView = true;
+    this.$vnode.data.routerView = true;
 
-        this.deep = 0;
-        let parent = this.$parent;
-        while(parent) {
-            if(parent.$vnode && parent.$vnode.isRouterView) {
-                this.deep++;
-            }
-            parent = parent.$parent;
+    // this.depth = 0;
+    let depth = 0;
+    // 遍历父级，获取深度
+    let parent = this.$parent;
+    while (parent) {
+      // if (parent.isRouterView) {
+      const vnodeData = parent.$vnode && parent.$vnode.data;
+      if (vnodeData) {
+        if (vnodeData.routerView) {
+          // 说明当前parent是一个router-view
+          depth++;
         }
-
-        let {routerMap} = this.$router;
-        console.log(this.deep);
-        let comp = routerMap[this.deep].component;
-        console.log(routerMap);
-        return h(comp);
-    },
-}
+        // this.depth++;
+      }
+      parent = parent.$parent;
+    }
+    // const { matched } = this.$router;
+    // const component = matched[depth].component || null;
+    let component = null;
+    const route = this.$router.matched[depth];
+    if (route) {
+      component = route.component;
+    }
+    return h(component);
+  }
+};

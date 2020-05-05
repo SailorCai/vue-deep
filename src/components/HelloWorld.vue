@@ -1,9 +1,9 @@
 <!--
  * @Author: SailorCai
  * @Date: 2019-09-15 12:24:14
- * @LastEditors  : SailorCai
- * @LastEditTime : 2020-01-05 18:31:00
- * @FilePath: /hello-cli3/src/components/HelloWorld.vue
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-05 09:10:22
+ * @FilePath: /vue-deep/src/components/HelloWorld.vue
  -->
 <template>
   <div>
@@ -23,14 +23,14 @@
 
 <script>
 // import {a} from '../utils/moduleDemo';
-import { mapState } from 'vuex';
-import kForm from './kForm/kForm.vue';
-import kFormItem from './kForm/kFormItem.vue';
-import kInput from './kForm/kInput.vue';
-import notice from '@/components/notice.vue';
+import { mapState } from "vuex";
+import kForm from "./kForm/kForm.vue";
+import kFormItem from "./kForm/kFormItem.vue";
+import kInput from "./kForm/kInput.vue";
+// import notice from "@/components/notice.vue";
 
 export default {
-  name: 'HelloWorld',
+  name: "HelloWorld",
   components: {
     kInput,
     kForm,
@@ -42,23 +42,23 @@ export default {
   data() {
     return {
       userInfo: {
-        username: '',
-        password: '',
+        username: "",
+        password: ""
       },
       rules: {
         username: {
           required: true,
-          message: '用户名必填'
+          message: "用户名必填"
         },
         password: {
           required: true,
-          message: '密码必填'
+          message: "密码必填"
         }
-      },
-    }
+      }
+    };
   },
   computed: {
-    ...mapState(['name']),
+    ...mapState(["name"])
   },
   mounted() {
     // this.$store.commit('increment', 'haha');
@@ -66,21 +66,21 @@ export default {
   methods: {
     login() {
       this.$refs.loginForm.validate(valid => {
-        this.$create(notice, {
+        this.$notice({
           duration: 2000,
-          message: valid ? '登录': '校验失败',
-          title: '登录提示框'
+          message: valid ? "登录" : "校验失败",
+          title: "登录提示框"
         }).show();
-        /* if(valid) {
-          alert('请求登录');
-        }else{
-          console.log('error submit');
+        /* if (valid) {
+          alert("请求登录");
+        } else {
+          console.log("error submit");
           return false;
         } */
       });
-    },
+    }
   }
-}
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
