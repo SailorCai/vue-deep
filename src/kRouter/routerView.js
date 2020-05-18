@@ -2,11 +2,11 @@
  * @Author: SailorCai
  * @Date: 2020-01-05 16:53:23
  * @LastEditors: SailorCai
- * @LastEditTime: 2020-05-05 16:33:08
+ * @LastEditTime: 2020-05-18 08:15:40
  * @FilePath: /vue-deep/src/kRouter/routerView.js
  */
 export default {
-  name: "router-link",
+  name: "router-view",
   props: {},
   render(h) {
     // this.isRouterView = true;
