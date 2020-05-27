@@ -1,0 +1,36 @@
+<!--
+ * @Author: SailorCai
+ * @Date: 2020-05-25 22:38:10
+ * @LastEditors: SailorCai
+ * @LastEditTime: 2020-05-26 08:29:37
+ * @FilePath: /vue-deep/src/index.html
+-->
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <script src="./kvue/vue.js"></script>
+    <title>Document</title>
+  </head>
+  <body>
+    <div id="app">
+      <p>当前count：{{count}}</p>
+      <div k-bind="count"></div>
+    </div>
+    <script>
+      new Vue({
+        el: '#app',
+        data: {
+          count: 0,
+        },
+        mounted() {
+          setInterval(() => {
+            this.count++;
+          }, 1000)
+        },
+      });
+    </script>
+  </body>
+</html>
